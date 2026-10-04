@@ -1,0 +1,72 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: grafana
+      version: "13.2.7"
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-community
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    admin:
+      existingSecret: grafana-admin
+      userKey: admin-user
+      passwordKey: admin-password
+    persistence:
+      enabled: false
+    resources:
+      requests: { cpu: 50m, memory: 192Mi }
+      limits: { memory: 512Mi }
+    grafana.ini:
+      server:
+        domain: ${PUBLIC_DOMAIN}
+        root_url: https://${PUBLIC_DOMAIN}/grafana/
+        serve_from_sub_path: true
+    sidecar:
+      dashboards:
+        enabled: true
+        searchNamespace: ALL
+      resources:
+        limits: { memory: 128Mi }
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: VictoriaMetrics
+            type: prometheus
+            uid: prometheus
+            url: http://vmsingle-server.monitoring.svc:8428
+            isDefault: true
+          - name: Jaeger
+            type: jaeger
+            uid: jaeger
+            url: http://jaeger.monitoring.svc:16686
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: default
+            orgId: 1
+            folder: ""
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+    dashboards:
+      default:
+        node-exporter-full:
+          gnetId: 1860
+          revision: 45
+          datasource: VictoriaMetrics

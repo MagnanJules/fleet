@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana
+  namespace: monitoring
+  annotations:
+    cert-manager.io/cluster-issuer: ${ACME_ISSUER}
+spec:
+  ingressClassName: cilium
+  tls:
+    - hosts:
+        - ${PUBLIC_DOMAIN}
+      secretName: grafana-tls
+  rules:
+    - host: ${PUBLIC_DOMAIN}
+      http:
+        paths:
+          - path: /grafana
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 80

@@ -1,0 +1,27 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jaeger
+  namespace: monitoring
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: jaeger
+      version: "4.14.1"
+      sourceRef:
+        kind: HelmRepository
+        name: jaegertracing
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    fullnameOverride: jaeger
+    jaeger:
+      replicas: 1
+      resources:
+        requests: { cpu: 50m, memory: 128Mi }
+        limits: { memory: 384Mi }

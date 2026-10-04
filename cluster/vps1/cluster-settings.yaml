@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings
+  namespace: flux-system
+data:
+  PUBLIC_DOMAIN: julesmagnan.com
+  ACME_ISSUER: letsencrypt-prod
