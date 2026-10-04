@@ -9,13 +9,13 @@ spec:
   ingressClassName: cilium
   tls:
     - hosts:
-        - ${PUBLIC_DOMAIN}
+        - grafana.${PUBLIC_DOMAIN}
       secretName: grafana-tls
   rules:
-    - host: ${PUBLIC_DOMAIN}
+    - host: grafana.${PUBLIC_DOMAIN}
       http:
         paths:
-          - path: /grafana
+          - path: /
             pathType: Prefix
             backend:
               service:

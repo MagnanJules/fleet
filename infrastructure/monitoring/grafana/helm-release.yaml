@@ -30,8 +30,8 @@ spec:
       limits: { memory: 512Mi }
     grafana.ini:
       server:
-        domain: ${PUBLIC_DOMAIN}
-        root_url: https://${PUBLIC_DOMAIN}/grafana/
+        domain: grafana.${PUBLIC_DOMAIN}
+        root_url: https://grafana.${PUBLIC_DOMAIN}
         serve_from_sub_path: true
     sidecar:
       dashboards:
