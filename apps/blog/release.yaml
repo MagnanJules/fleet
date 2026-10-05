@@ -17,7 +17,7 @@ spec:
   images:
     - name: blog
       newName: ghcr.io/magnanjules/blog
-      newTag: v0.1.2
+      newTag: v0.1.4
   postBuild:
     substituteFrom:
       - kind: ConfigMap

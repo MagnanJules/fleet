@@ -7,4 +7,4 @@ spec:
   interval: 10m
   url: https://github.com/MagnanJules/blog
   ref:
-    tag: v0.1.2
+    tag: v0.1.4
