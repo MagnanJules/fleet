@@ -1,0 +1,24 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: blog
+  namespace: flux-system
+spec:
+  interval: 10m
+  retryInterval: 1m
+  timeout: 5m
+  sourceRef:
+    kind: GitRepository
+    name: blog
+  path: ./deploy
+  targetNamespace: blog
+  prune: true
+  wait: true
+  images:
+    - name: blog
+      newName: ghcr.io/magnanjules/blog
+      newTag: v0.1.2
+  postBuild:
+    substituteFrom:
+      - kind: ConfigMap
+        name: cluster-settings
