@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   - grafana-admin.sops.yaml
   - victoria-metrics
+  - kube-state-metrics
   - jaeger
   - grafana

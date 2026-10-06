@@ -26,7 +26,78 @@ spec:
         enabled: true
         size: 10Gi
       resources:
-        requests: { cpu: 50m, memory: 128Mi }
-        limits: { memory: 512Mi }
+        requests: { cpu: 100m, memory: 192Mi }
+        limits: { memory: 640Mi }
+
+      extraArgs:
+        search.maxConcurrentRequests: "2"
+        search.maxQueueDuration: "20s"
+        search.maxMemoryPerQuery: "150MB"
+        search.maxUniqueTimeseries: "50000"
+        search.maxQueryDuration: "30s"
+        search.logSlowQueryDuration: "3s"
+        memory.allowedPercent: "60"
+
+      relabel:
+        enabled: true
+        config:
+          - target_label: cluster
+            replacement: vps1
+            action: replace
+
+          - source_labels: [__name__]
+            action: drop
+            regex: >-
+              container_(blkio_device_usage_total|tasks_state|memory_failures_total|memory_failcnt|memory_mapped_file|cpu_load_average_10s|cpu_system_seconds_total|cpu_user_seconds_total|file_descriptors|sockets|threads_max|ulimits_soft|fs_(reads|writes|sector_reads|sector_writes|io_current|io_time_seconds_total|io_time_weighted_seconds_total|inodes_free|inodes_total|read_seconds_total|write_seconds_total).*|spec_cpu_shares|spec_memory_(reservation|swap)_limit_bytes|network_(receive|transmit)_(errors|dropped)_total)
+          - source_labels: [__name__, interface]
+            action: drop
+            regex: container_network_.*;(lxc.*|cilium_.*|lo)
+          - action: labeldrop
+            regex: (id|image)
+
+          - source_labels: [__name__]
+            action: drop
+            regex: hubble_port_distribution_total
+
       scrape:
         enabled: true
+        extraScrapeConfigs:
+          - job_name: hubble
+            scrape_interval: 60s
+            kubernetes_sd_configs:
+              - role: pod
+                namespaces:
+                  names: [kube-system]
+            relabel_configs:
+              - source_labels: [__meta_kubernetes_pod_label_k8s_app]
+                action: keep
+                regex: cilium
+              - source_labels: [__meta_kubernetes_pod_ip]
+                target_label: __address__
+                replacement: "$1:9965"
+              - source_labels: [__meta_kubernetes_namespace]
+                target_label: namespace
+              - source_labels: [__meta_kubernetes_pod_name]
+                target_label: pod
+
+          - job_name: cilium-envoy
+            scrape_interval: 30s
+            kubernetes_sd_configs:
+              - role: pod
+                namespaces:
+                  names: [kube-system]
+            relabel_configs:
+              - source_labels: [__meta_kubernetes_pod_label_k8s_app]
+                action: keep
+                regex: cilium-envoy
+              - source_labels: [__meta_kubernetes_pod_ip]
+                target_label: __address__
+                replacement: "$1:9964"
+              - source_labels: [__meta_kubernetes_namespace]
+                target_label: namespace
+              - source_labels: [__meta_kubernetes_pod_name]
+                target_label: pod
+            metric_relabel_configs:
+              - source_labels: [__name__]
+                action: keep
+                regex: envoy_(cluster_upstream_rq.*|cluster_upstream_cx.*|server_(memory_allocated|live|uptime))
