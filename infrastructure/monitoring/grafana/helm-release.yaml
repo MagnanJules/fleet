@@ -27,7 +27,8 @@ spec:
       enabled: false
     resources:
       requests: { cpu: 100m, memory: 384Mi }
-      limits: { memory: 768Mi }
+      # CPU limit so a request flood on Grafana cannot consume both vCPUs of the node.
+      limits: { cpu: 500m, memory: 768Mi }
     grafana.ini:
       server:
         domain: grafana.${PUBLIC_DOMAIN}
