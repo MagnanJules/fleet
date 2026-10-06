@@ -5,6 +5,8 @@ metadata:
   namespace: monitoring
   annotations:
     cert-manager.io/cluster-issuer: ${ACME_ISSUER}
+    # Cilium defaults to no backend timeout at all, which lets slow requests pin Envoy workers.
+    ingress.cilium.io/request-timeout: "30"
 spec:
   ingressClassName: cilium
   tls:

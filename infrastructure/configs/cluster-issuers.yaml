@@ -9,9 +9,13 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-staging-account
     solvers:
-      - http01:
-          ingress:
-            ingressClassName: cilium
+      # DNS-01 rather than HTTP-01: behind Cloudflare the challenge would be redirected to HTTPS
+      # against an origin that has no valid certificate for the host yet, and renewals would fail.
+      - dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-api-token
+              key: api-token
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -24,6 +28,8 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-prod-account
     solvers:
-      - http01:
-          ingress:
-            ingressClassName: cilium
+      - dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-api-token
+              key: api-token
