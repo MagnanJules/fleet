@@ -1,0 +1,47 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-state-metrics
+  namespace: monitoring
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: kube-state-metrics
+      version: "8.6.0"
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    replicas: 1
+    prometheusScrape: true
+    service:
+      port: 8080
+      annotations:
+        prometheus.io/port: "8080"
+    selfMonitor:
+      enabled: false
+    prometheus:
+      monitor:
+        enabled: false
+    collectors:
+      - daemonsets
+      - deployments
+      - namespaces
+      - nodes
+      - persistentvolumeclaims
+      - pods
+      - replicasets
+      - statefulsets
+    metricLabelsAllowlist:
+      - pods=[app.kubernetes.io/name,k8s-app]
+    resources:
+      requests: { cpu: 10m, memory: 48Mi }
+      limits: { memory: 128Mi }
