@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: yakanymede-tokens
+    namespace: apps
+type: Opaque
+stringData:
+    #ENC[AES256_GCM,data:p/sQAHv0nXZcGb0TRb/xbLfbCdzysopcH4uuY1rXfiOH12qx1amMuOng+GQ3315iYWlm533mkPNRzJksTrGGV77ddnwfMmMe,iv:Wp+Fpt52U/2ZewrI9al458FzpXKuMiaP7Uu1cB9QtwA=,tag:DJXl2sA85DnvWduOs12Pgg==,type:comment]
+    #ENC[AES256_GCM,data:n2/2IJ1jobM1FI4KKL6U4mb0UD7jdBApqHr8qsJM1EJgPJXU7bUOc9pc2jt5pVggz4zW3Jv1oPTH3RAsSr/dAplZVg==,iv:DwtnTiwdr5tWlgJBS4UFeZ8Jy0mqs0tKi8lA27x1cSo=,tag:p9DlEfPWQbuIh3ZBRH8ARw==,type:comment]
+    #ENC[AES256_GCM,data:pw8PT+qFvA9KOvGZCUoPvymBs3QlT+JQQMYBSlFOdJQ5Yli4xWk38JCICyQVxQ==,iv:200c87iPZkfUANACdzi3c3pC5l4YgMoiTh6tDX0z9lE=,tag:bKlXD7QaiCBn9k5YxeWBmA==,type:comment]
+    tokens: ENC[AES256_GCM,data:dspOSNOm8+feGo3avh+HjOVObsVHGJhh6AxqtnngnTvzBvxATY/qyZUJccPkOgRCInWCTVg3TX2DRJqPiM5uz4piBuDaZ4TyJWs9xCW1m2iGPBLk3FToZ2TM0hjAja9CFXjYIihm/qG2/jA=,iv:QeCFB23elkO+PHWsxQMtMOvA6amrxeeDWYsFIt4JdHg=,tag:Ji+nm/cWMPvScIhH09qcVA==,type:str]
+sops:
+    age:
+        - enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBPeVRGV1RDVzQxMitrelpj
+            T2tGZm85cEloelp3djJTU2xCZHF3VDhXZ3hVCks2T1lMa2NXUUF3SWFYQmVPZDZu
+            ODhYYXZDNjBRTkF1R0ZPSUhpcWJDS2cKLS0tIElzRlZNR1dRWlA4MUZVRFQxL0xm
+            MWpqWkEzUTBnWFZ4R0xBdnlZOHZiU0kKWKvk0JGv8BYRgvdQCFeQz2BFd6Jjpv54
+            Ll+ZncEIYR6iIP0/Yjlg5ISdJquWO/bqRu3O4KK5eLBletf4x5D7Uw==
+            -----END AGE ENCRYPTED FILE-----
+          recipient: age1pw5vx0yxwy640df902ufqdnh3su8v2xklgk4s53yg80d94fjvg4qd6mca9
+    encrypted_regex: ^(data|stringData)$
+    lastmodified: "2026-10-18T20:41:40Z"
+    mac: ENC[AES256_GCM,data:TPEFQqfFYt1xjn3hdKcpXDqXDsUcSKnS8LESdlICt+YWWQHRNJWcDnpz3ff94tTT6nsE3rFWqSI4kpRj6XxM/NsB0cTqmyZ6wj9y2saPr1EPWhTcaqIG7EAJTCXQ0lmv2zaa8kPnKfmucPBoDV/9BmPrM8CCopONlwwx3U1dLLo=,iv:JlX2MOQZgcWqDLormzfl9reW5i/fqUM8uracZPdHH18=,tag:5zei7Ko8qVip6AjL4IkYWg==,type:str]
+    version: 3.13.3

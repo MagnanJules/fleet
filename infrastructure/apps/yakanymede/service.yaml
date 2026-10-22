@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: yakanymede-api
+  namespace: apps
+spec:
+  selector:
+    app.kubernetes.io/name: yakanymede-api
+  ports:
+    - name: http
+      port: 8787
+      targetPort: http

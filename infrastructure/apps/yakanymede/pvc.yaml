@@ -1,0 +1,14 @@
+# The api keeps its data in a sqlite file. One volume, one writer: the
+# deployment below is pinned to a single replica for that reason, and the
+# strategy is Recreate so two pods never hold the file at once.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: yakanymede-data
+  namespace: apps
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi

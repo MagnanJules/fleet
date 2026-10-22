@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yakanymede-api
+  namespace: apps
+  labels:
+    app.kubernetes.io/name: yakanymede-api
+spec:
+  # one, and only one: the sqlite file on the volume takes a single writer.
+  # Moving to postgres is what lifts this; nothing else here has to change.
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: yakanymede-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: yakanymede-api
+    spec:
+      imagePullSecrets:
+        - name: yakanymede-registry
+      securityContext:
+        # the image runs as nonroot (65532); the volume has to belong to it
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: registry.cri.epita.fr/jules.magnan/yakanymede/yakanymede-api:v0.2.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - --verbose
+          env:
+            - name: YAKANYMEDE_ADDR
+              value: 0.0.0.0:8787
+            - name: YAKANYMEDE_DB
+              value: /data/yakanymede.db
+            - name: YAKANYMEDE_TOKENS
+              valueFrom:
+                secretKeyRef:
+                  name: yakanymede-tokens
+                  key: tokens
+          ports:
+            - name: http
+              containerPort: 8787
+          # the database is opened at startup; readiness is what keeps traffic
+          # away until it is, liveness only catches a wedged process
+          startupProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            failureThreshold: 20
+            periodSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: yakanymede-data

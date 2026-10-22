@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJyZWdpc3RyeS5jcmkuZXBpdGEuZnIiOnsidXNlcm5hbWUiOiJnaXRsYWIrZGVwbG95LXRva2VuLXJlYWQiLCJwYXNzd29yZCI6Ik16d1R5WHd6STRQWjRxWkI1THpFb204Nk1RcDFPbU5sWWdrLjAxLjB6MHd1ZnBkMCIsImF1dGgiOiJaMmwwYkdGaUsyUmxjR3h2ZVMxMGIydGxiaTF5WldGa09rMTZkMVI1V0hkNlNUUlFXalJ4V2tJMVRIcEZiMjA0TmsxUmNERlBiVTVzV1dkckxqQXhMakI2TUhkMVpuQmtNQT09In19fQ==
+kind: Secret
+metadata:
+  name: yakanymede-registry
+  namespace: apps
+type: kubernetes.io/dockerconfigjson
