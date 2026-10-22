@@ -1,8 +1,23 @@
 apiVersion: v1
 data:
-  .dockerconfigjson: eyJhdXRocyI6eyJyZWdpc3RyeS5jcmkuZXBpdGEuZnIiOnsidXNlcm5hbWUiOiJnaXRsYWIrZGVwbG95LXRva2VuLXJlYWQiLCJwYXNzd29yZCI6Ik16d1R5WHd6STRQWjRxWkI1THpFb204Nk1RcDFPbU5sWWdrLjAxLjB6MHd1ZnBkMCIsImF1dGgiOiJaMmwwYkdGaUsyUmxjR3h2ZVMxMGIydGxiaTF5WldGa09rMTZkMVI1V0hkNlNUUlFXalJ4V2tJMVRIcEZiMjA0TmsxUmNERlBiVTVzV1dkckxqQXhMakI2TUhkMVpuQmtNQT09In19fQ==
+    .dockerconfigjson: ENC[AES256_GCM,data:3Ff78r2BsimATC3slFGDQkTKo0YWxiWkrWKDmIzsUGQ9FG2nBZNDHY88Nrb6uGL20ApMlXs3a8vHx41zjmUR/3fpy3fU7taLh8ZAVLXH+wsUTad3ZE6wAD2LrqKuWrYg6Oy5LfWbwpi8zaTvF5NKugT/0WBLyvd4Kev6lSnn5Vu/Wgf0EvkKZm9YwcL9Yrw9AucSDBWNdIgb+n9/Bj7XWZG466txGk+328js4zk2/wRQTTDqquOHzKUaTPBotrjSCSrL3NmQobhuuGRJ+yAWEGqHKUrffaCJ0WquTu3VrIPwUrMTIyk+J5r7Skcwgb0rAL0GIjkPWBVOQxRUOZplTw==,iv:bW/7+sDsI307OD/780eSwyQ1L4A9fGi7n5TFuPQ1hjw=,tag:77Oj5rJzQPMKNVMzcjjyQw==,type:str]
 kind: Secret
 metadata:
-  name: yakanymede-registry
-  namespace: apps
+    name: yakanymede-registry
+    namespace: apps
 type: kubernetes.io/dockerconfigjson
+sops:
+    age:
+        - enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBsL1l1cW9uRFdIRStvSmNt
+            SHZJWkVUTTJNYm80RjJ0UkVGaERjbXV4eXdNCnoxZkJPK0JXeUY0ajJCVzVUaVFY
+            M2p2Mk00S25ma0JuSGxNNUdDWmtwTlkKLS0tIE1lUkpCY3hCMm9NOTdGQThrUXZS
+            Y1FUV3JlakVLTithMFJkOWF2b0pmdG8KO/hZ1+ZRhT3qm88Bkl8KOEj2QINqlNgX
+            ZnGgWFU0DMr6B0ZdegxR7wzzHmNAcg8j+4749i1KBZgGE1jI2tbsNQ==
+            -----END AGE ENCRYPTED FILE-----
+          recipient: age1pw5vx0yxwy640df902ufqdnh3su8v2xklgk4s53yg80d94fjvg4qd6mca9
+    encrypted_regex: ^(data|stringData)$
+    lastmodified: "2026-10-22T16:33:14Z"
+    mac: ENC[AES256_GCM,data:tr8hJknkMrK0y4f041LWeOVzzkJi0S66dQpNG7iGb4srE8zE1IccADcEMM766tOrpQKwmsEmRY4SRs0QmYZhE+rOU1C11U7qhncojxRwwUY7ggAnjKKmH/62B/PmrvcVIHK3hx/hmoVwq2V3ccUZLA3N3qM8pzTUF5bzhTkHKXA=,iv:DsUywKQdfiv3+dowIfLeFtUGZ7H3MxNcok9xHzMKT8M=,tag:h9tANflwnRrRAkp6vQwIag==,type:str]
+    version: 3.13.3
