@@ -31,7 +31,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: api
-          image: registry.cri.epita.fr/jules.magnan/yakanymede/yakanymede-api:v0.8.0
+          image: registry.cri.epita.fr/jules.magnan/yakanymede/yakanymede-api:v0.8.1
           imagePullPolicy: IfNotPresent
           args:
             - --verbose
